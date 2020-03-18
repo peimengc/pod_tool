@@ -75,16 +75,48 @@
         </div>
     </nav>
 
-    <div class="container">
-        <div class="row py-4">
+    <div class="px-5 py-4">
+        <div class="row">
             @auth()
                 <div class="col-md-2">
                     <ul class="list-group">
                         <a class="list-group-item {{ active_class(if_route('home')) }}" href="{{route('home')}}">
                             主页
                         </a>
-                        <a class="list-group-item {{ active_class(if_route('douyin_users.index')) }}" href="{{route('douyin_users.index')}}">
-                            抖音
+                        <a class="list-group-item {{ active_class(if_route('douyin_users.index')) }}"
+                           href="{{route('douyin_users.index')}}">
+                            抖音账号
+                        </a>
+                        <div class="dropdown list-group-item">
+                            <a class="dropdown-toggle" type="button" id="orderDropdown"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                淘宝订单
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="orderDropdown">
+                                <button class="dropdown-item" data-toggle="modal" data-type="1" data-target="#qrcode">
+                                    所有订单
+                                </button>
+                                <button class="dropdown-item" data-toggle="modal" data-type="2" data-target="#qrcode">
+                                    账号统计
+                                </button>
+                            </div>
+                        </div>
+                        <div class="dropdown list-group-item">
+                            <a class="dropdown-toggle" type="button" id="roiDropdown"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                ROI统计
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="roiDropdown">
+                                <button class="dropdown-item" data-toggle="modal" data-type="1" data-target="#qrcode">
+                                    时段统计
+                                </button>
+                                <button class="dropdown-item" data-toggle="modal" data-type="2" data-target="#qrcode">
+                                    账号统计
+                                </button>
+                            </div>
+                        </div>
+                        <a class="list-group-item" href="">
+                            联盟授权
                         </a>
                     </ul>
                 </div>
