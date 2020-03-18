@@ -26,7 +26,7 @@ class DouyinUserController extends Controller
             ->when($request->query('keywords'),function (Builder $builder,$keywords) {
                 $builder->where('dy_nickname','like',"%{$keywords}%");
             })
-            ->orderByDesc('created_at')
+            ->orderByDesc('updated_at')
             ->paginate();
 
         return view('douyin_user.index',compact('users'));
