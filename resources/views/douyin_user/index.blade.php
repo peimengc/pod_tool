@@ -74,6 +74,9 @@
                 </tbody>
             </table>
         </div>
+        <div class="col-md-12">
+            {{$users->links()}}
+        </div>
     </div>
     {{--扫码modal--}}
     <div class="modal fade" id="qrcode" tabindex="-1" role="dialog" aria-labelledby="qrcodeLabel" aria-hidden="true">
@@ -95,8 +98,8 @@
 @section('js')
     <script !src="">
         var checkQrconnect = null
+        var $img = $('<img src="" width="100%">');
         $('#qrcode').on('show.bs.modal', function (e) {
-            var $img = $('<img src="" width="100%">');
             var $modal = $(this);
             var $modalBody = $modal.find('.modal-body');
             var $modalTitle = $modal.find('.modal-title');
@@ -144,6 +147,7 @@
         })
         $('#qrcode').on('hide.bs.modal', function () {
             clearInterval(checkQrconnect)
+            $img.remove();
         })
     </script>
 @endsection

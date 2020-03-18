@@ -42,7 +42,7 @@ class DouyinWebApi
 
         $request = (new Client())->request(
             'GET',
-            config('douyin_api.web_api.check_qrconnect').$token
+            config('douyin_api.web_api.check_qrconnect') . $token
         );
 
         $resArr = json_decode($request->getBody()->getContents(), 1);
@@ -69,7 +69,7 @@ class DouyinWebApi
                 //cookie
                 $cookies = $this->getCookies($request->getHeaders());
 
-                $cookieStr = self::getSessionid($cookies);
+                $cookieStr = 'sessionid=' . $cookies['sessionid'];
                 //账号信息
                 $userInfo = $this->getUserInfo($cookieStr, $cookies);
                 //淘宝mm码
@@ -135,11 +135,7 @@ class DouyinWebApi
 
             list($name, $value) = explode('=', explode(';', $cookie)[0]);
 
-            $cookies[] = [
-                'name' => $name,
-                'value' => $value,
-                'domain' => '.douyin.com'
-            ];
+            $cookies[$name] = $value;
         }
 
         return $cookies;
@@ -167,27 +163,8 @@ class DouyinWebApi
 
         return [
             'tb_sub_pid' => $resArr['data']['sub_pid'],
-            'tb_adzone_id' => explode('_', $resArr['data']['sub_pid'])[3]
+            'tb_adzone_id' => $resArr['data']['sub_pid'] ? explode('_', $resArr['data']['sub_pid'])[3] : ''
         ];
 
     }
-
-    /**
-     * 获取sessionid
-     * @param $cookies
-     * @return mixed|string
-     */
-    public static function getSessionid($cookies)
-    {
-        $cookieStr = '';
-
-        foreach ($cookies as $cookie) {
-            if ($cookie['name'] === 'sessionid')
-                $cookieStr .= $cookie['name'] . '=' . $cookie['value'] . ';';
-        }
-
-        return $cookieStr;
-    }
-
-
 }
