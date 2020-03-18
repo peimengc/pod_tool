@@ -75,7 +75,7 @@
         </div>
     </nav>
 
-    <div class="px-5 py-4">
+    <div class="container py-4">
         <div class="row">
             @auth()
                 <div class="col-md-2">
