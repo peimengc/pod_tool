@@ -2,6 +2,8 @@
 return [
   'web_api' =>  [
       //获取抖音用户信息
-      'media_user_info' => 'https://media.douyin.com/web/api/media/user/info/'
+      'media_user_info' => 'https://media.douyin.com/web/api/media/user/info/',
+      'get_qrcode' => 'https://creator.douyin.com/passport/web/get_qrcode/?next=https:%2F%2Fcreator.douyin.com%2F&aid=2906',
+      'check_qrconnect'=>'https://creator.douyin.com/passport/web/check_qrconnect/?next=https:%2F%2Fcreator.douyin.com%2F&aid=2906&token='
   ]
 ];

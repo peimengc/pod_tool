@@ -18,3 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/douyin_users','DouyinUserController@index')->name('douyin_users.index');
+    Route::get('/douyin_users/get_qrcode','DouyinUserController@getQrcode')->name('douyin_users.get_qrcode');
+    Route::get('/douyin_users/{token}/check_qrconnect','DouyinUserController@checkQrconnect')->name('douyin_users.check_qrconnect');
+});

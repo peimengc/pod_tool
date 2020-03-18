@@ -9,15 +9,14 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    @yield('css')
 </head>
 <body>
 <div id="app">
@@ -81,8 +80,12 @@
             @auth()
                 <div class="col-md-2">
                     <ul class="list-group">
-                        <li class="list-group-item {{ active_class(if_route('home')) }}">主页</li>
-                        <li class="list-group-item">抖音</li>
+                        <a class="list-group-item {{ active_class(if_route('home')) }}" href="{{route('home')}}">
+                            主页
+                        </a>
+                        <a class="list-group-item {{ active_class(if_route('douyin_users.index')) }}" href="{{route('douyin_users.index')}}">
+                            抖音
+                        </a>
                     </ul>
                 </div>
             @endauth
@@ -97,7 +100,9 @@
             </div>
         </div>
     </div>
-
 </div>
 </body>
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}"></script>
+@yield('js')
 </html>
