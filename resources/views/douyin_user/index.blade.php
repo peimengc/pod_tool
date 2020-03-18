@@ -135,7 +135,7 @@
                             },
                             error: function () {
                                 clearInterval(checkQrconnect)
-
+                                alert('错误,请重试')
                             }
                         })
                     }, 1000)
