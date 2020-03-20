@@ -34,7 +34,19 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
-
+                    @auth()
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(if_route('home')) }}" href="{{route('home')}}">
+                                主页
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(if_route('douyin_users.index')) }}"
+                               href="{{route('douyin_users.index')}}">
+                                抖音账号
+                            </a>
+                        </li>
+                    @endauth
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -76,61 +88,15 @@
     </nav>
 
     <div class="container py-4">
-        <div class="row">
-            @auth()
-                <div class="col-md-2">
-                    <ul class="list-group">
-                        <a class="list-group-item {{ active_class(if_route('home')) }}" href="{{route('home')}}">
-                            主页
-                        </a>
-                        <a class="list-group-item {{ active_class(if_route('douyin_users.index')) }}"
-                           href="{{route('douyin_users.index')}}">
-                            抖音账号
-                        </a>
-                        <div class="dropdown list-group-item">
-                            <a class="dropdown-toggle" type="button" id="orderDropdown"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                淘宝订单
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="orderDropdown">
-                                <button class="dropdown-item" data-toggle="modal" data-type="1" data-target="#qrcode">
-                                    所有订单
-                                </button>
-                                <button class="dropdown-item" data-toggle="modal" data-type="2" data-target="#qrcode">
-                                    账号统计
-                                </button>
-                            </div>
-                        </div>
-                        <div class="dropdown list-group-item">
-                            <a class="dropdown-toggle" type="button" id="roiDropdown"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                ROI统计
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="roiDropdown">
-                                <button class="dropdown-item" data-toggle="modal" data-type="1" data-target="#qrcode">
-                                    时段统计
-                                </button>
-                                <button class="dropdown-item" data-toggle="modal" data-type="2" data-target="#qrcode">
-                                    账号统计
-                                </button>
-                            </div>
-                        </div>
-                        <a class="list-group-item" href="">
-                            联盟授权
-                        </a>
-                    </ul>
-                </div>
-            @endauth
-            <div class="col-md-10">
-                @if (session('status'))
-                    <div class="alert alert-{{ session('status.type','success') }}" role="alert">
-                        {{ session('status.content') }}
-                    </div>
-                @endif
 
-                @yield('content')
+        @if (session('status'))
+            <div class="alert alert-{{ session('status.type','success') }}" role="alert">
+                {{ session('status.content') }}
             </div>
-        </div>
+        @endif
+
+        @yield('content')
+
     </div>
 </div>
 </body>
