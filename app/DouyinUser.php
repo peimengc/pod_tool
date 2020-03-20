@@ -14,6 +14,15 @@ class DouyinUser extends Model
     ];
 
     protected $casts = [
-        'dy_cookie' => 'json',
+        'dy_cookie' => 'array',
     ];
+
+    const TYPE_WORK = 1;
+    const TYPE_PROFIT = 2;
+
+    public function getSessionidAttribute()
+    {
+        return 'sessionid=' . ($this->dy_cookie['sessionid'] ?? '');
+    }
+
 }

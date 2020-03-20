@@ -16,13 +16,15 @@ class DouplusTask extends Model
         'cost',
         'budget',
         'total_balance',
-        'duration',
-        'delivery_start_time',
         'create_time',
-        'reject_reason'
+        'reject_reason',
+        'state_desc',
+        'ad_stat',
+        'item_cover'
     ];
 
     protected $casts = [
-        'delivery_start_time' => 'datetime'
+        'delivery_start_time' => 'datetime',
+        'ad_stat' => 'json'
     ];
 }
