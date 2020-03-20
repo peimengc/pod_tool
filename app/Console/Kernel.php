@@ -24,8 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        //定时获取抖音投放任务
+        $schedule->command('douyin:get-task-list');
     }
 
     /**
