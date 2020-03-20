@@ -28,4 +28,10 @@ class DouyinUserService
             ->whereNotNull('dy_cookie')
             ->get();
     }
+
+    public function pluck($column, $key = null)
+    {
+        return $this->douyinUser
+            ->pluck($column, $key);
+    }
 }

@@ -19,13 +19,15 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
         //定时获取抖音投放任务
-        $schedule->command('douyin:get-task-list');
+        $schedule->command('douyin:get-task-list')->everyMinute();
+
+        $schedule->command('dingdanxia:get-order-details')->everyFiveMinutes();
     }
 
     /**
@@ -35,7 +37,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
