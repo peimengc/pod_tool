@@ -4,7 +4,7 @@
     <div class="row bg-white py-4 px-2">
         <div class="col-md-12">
             <h4>抖音账号列表</h4>
-            <p>所有抖音账号
+            <p>所有抖音账号</p>
         </div>
         <div class="col-md-12">
             <form>

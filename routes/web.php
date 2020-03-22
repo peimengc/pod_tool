@@ -25,4 +25,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/douyin_users/{token}/check_qrconnect','DouyinUserController@checkQrconnect')->name('douyin_users.check_qrconnect');
 
     Route::get('/alimama_orders','AlimamaOrderController@index')->name('alimama_orders.index');
+
+    Route::get('/roi/{douyinUser}/hour','RoiController@hour')->name('roi.hour');
 });
