@@ -7,7 +7,6 @@ namespace App\Services;
 use App\AlimamaOrder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 
 class AlimamaOrderService
 {
@@ -46,16 +45,33 @@ class AlimamaOrderService
     public function filterAttributes($attributes, $tk_auth_id)
     {
         $adzoneIdArr = app(DouyinUserService::class)->pluck('id', 'tb_adzone_id');
+        $date = now()->toDateTimeString();
+        return collect($attributes)->map(function ($item) use ($tk_auth_id, $adzoneIdArr, $date) {
+            $attr = [];
 
-        return collect($attributes)->map(function ($item) use ($tk_auth_id, $adzoneIdArr) {
-            $item['tk_auth_id'] = $tk_auth_id;
-            $item['douyin_user_id'] = Arr::get($adzoneIdArr, $item['adzone_id']);
-            return $item;
+            $attr['tk_auth_id'] = $tk_auth_id;
+            $attr['douyin_user_id'] = Arr::get($adzoneIdArr, $item['adzone_id']);
+            $attr['created_at'] = $date;
+            $attr['updated_at'] = $date;
+
+            foreach ($this->model->getFillable() as $value) {
+                $attr[$value] = Arr::get($item, $value);
+            }
+
+            return $attr;
         });
     }
 
     protected function getExistsTradeId($tradeIds)
     {
         return $this->model->whereIn('trade_id', $tradeIds)->pluck('trade_id');
+    }
+
+    public function paginate($perPage = null, $columns = ['*'])
+    {
+        return $this->model
+            ->orderByDesc('tk_create_time')
+            ->paginate($perPage, $columns)
+            ->appends(request()->all());
     }
 }

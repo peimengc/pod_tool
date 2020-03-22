@@ -11,4 +11,62 @@ class AlimamaOrder extends Model
     const TK_STATUS_PAID = 3;
     const TK_STATUS_PAYMENT = 12;
     const TK_STATUS_GET = 14;
+
+    protected $fillable = [
+//        'douyin_user_id',
+//        'tk_auth_id',
+        'adzone_id',
+        'adzone_name',
+        'alimama_rate',
+        'alimama_share_fee',
+        'alipay_total_price',
+        'click_time',
+        'deposit_price',
+        'flow_source',
+        'income_rate',
+        'item_category_name',
+        'item_id',
+        'item_img',
+        'item_link',
+        'item_num',
+        'item_price',
+        'item_title',
+        'order_type',
+        'pub_id',
+        'pub_share_fee',
+        'pub_share_pre_fee',
+        'pub_share_rate',
+        'refund_tag',
+        'seller_nick',
+        'seller_shop_title',
+        'site_id',
+        'site_name',
+        'subsidy_fee',
+        'subsidy_rate',
+        'subsidy_type',
+        'tb_deposit_time',
+        'tb_paid_time',
+        'terminal_type',
+        'tk_commission_fee_for_media_platform',
+        'tk_commission_pre_fee_for_media_platform',
+        'tk_commission_rate_for_media_platform',
+        'tk_create_time',
+        'tk_deposit_time',
+        'tk_order_role',
+        'tk_paid_time',
+        'tk_status',
+        'tk_total_rate',
+        'total_commission_fee',
+        'total_commission_rate',
+        'trade_id',
+        'tk_earning_time',
+        'pay_price',
+        'special_id',
+        'relation_id',
+    ];
+
+    public function getFillable()
+    {
+        return $this->fillable;
+    }
 }
