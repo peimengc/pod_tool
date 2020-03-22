@@ -20,7 +20,7 @@ class DingdanxiaGetOrderDetails extends Command
      *
      * @var string
      */
-    protected $description = '订单侠获取淘宝订单';
+    protected $description = '订单侠获取淘宝订单 --start=开始时间 --end=结束时间 --status=订单状态13关闭3结算12付款14确认收货 --type=时间类型';
 
     /**
      * Create a new command instance.
