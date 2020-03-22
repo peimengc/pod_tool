@@ -28,7 +28,7 @@ class CreateDouplusTasksTable extends Migration
             $table->string('product_id')->nullable()->index()->comment('商品id');
 
             $table->string('duration')->nullable()->comment('投放时长，小时');
-            $table->string('cost')->nullable()->default(0)->comment('本条消耗');
+            $table->string('cost')->nullable()->comment('本条消耗');
             $table->timestamps();
         });
     }
