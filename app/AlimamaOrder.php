@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class AlimamaOrder extends Model
 {
@@ -11,6 +12,13 @@ class AlimamaOrder extends Model
     const TK_STATUS_PAID = 3;
     const TK_STATUS_PAYMENT = 12;
     const TK_STATUS_GET = 14;
+
+    public static $tkStatusArr = [
+        self::TK_STATUS_CLOSED => '已失效',
+        self::TK_STATUS_PAID => '已结算',
+        self::TK_STATUS_PAYMENT => '已付款',
+        self::TK_STATUS_GET => '已收货',
+    ];
 
     protected $fillable = [
 //        'douyin_user_id',
@@ -68,5 +76,16 @@ class AlimamaOrder extends Model
     public function getFillable()
     {
         return $this->fillable;
+    }
+
+    public function getTkStatusDescAttribute()
+    {
+        return Arr::get(self::$tkStatusArr,$this->tk_status);
+    }
+
+    public function douyinUser()
+    {
+        return $this->belongsTo(DouyinUser::class,'douyin_user_id','id')
+            ->withDefault(['dy_nickname'=>'']);
     }
 }

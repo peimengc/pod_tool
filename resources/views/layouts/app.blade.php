@@ -46,6 +46,12 @@
                                 抖音账号
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(if_route('alimama_orders.index')) }}"
+                               href="{{route('alimama_orders.index')}}">
+                                联盟订单
+                            </a>
+                        </li>
                     @endauth
                 </ul>
 
