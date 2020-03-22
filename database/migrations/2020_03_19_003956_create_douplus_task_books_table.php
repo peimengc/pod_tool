@@ -23,8 +23,6 @@ class CreateDouplusTaskBooksTable extends Migration
             $table->string('state')->index()->nullable()->comment('状态');
             $table->string('cost')->nullable()->comment('本条消耗');
             $table->string('cost_inc')->nullable()->comment('消耗增量');
-            $table->string('budget')->nullable()->comment('投放金额');
-            $table->string('total_balance')->nullable()->comment('余额');
             $table->timestamps();
         });
     }

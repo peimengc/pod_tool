@@ -22,16 +22,10 @@ class DingdanxiaApi
     {
         $formParams = [
             'apikey' => $this->api_key,
-            'start_time' => now()->addMinutes(-20)->toDateTimeString(),
-            'end_time' => now()->toDateTimeString(),
+            'start_time' => null,
+            'end_time' => null,
             'page_size' => 100,
             'page_no' => 1,
-//            'query_type' => 1,
-//            'position_index' => null,
-//            'member_type' => null,
-//            'tk_status' => null,
-//            'jump_type' => 1,
-//            'order_scene' => 1
         ];
 
         $resJson = $this->client->request(
@@ -47,8 +41,6 @@ class DingdanxiaApi
         if ($resArr['code'] === 200) {
             return $resArr;
         }
-
-        $resArr['title'] = __METHOD__;
 
         throw new DingdanxiaException(json_encode($resArr));
     }

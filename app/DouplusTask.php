@@ -12,19 +12,30 @@ class DouplusTask extends Model
         'aweme_author_id',
         'product_id',
         'task_id',
+        'budget',
+        'create_time',
+
         'state',
         'cost',
-        'budget',
-        'total_balance',
-        'create_time',
-        'reject_reason',
         'state_desc',
-        'ad_stat',
-        'item_cover'
+        'reject_reason',
+        'duration',
+
     ];
 
     protected $casts = [
         'delivery_start_time' => 'datetime',
         'ad_stat' => 'json'
     ];
+
+    const STATE_OVER = 1;
+    const STATE_RUN = 2;
+    const STATE_REJECT = 3;
+
+    public static $stateArr = [
+        self::STATE_OVER => '投放完成',
+        self::STATE_RUN => '投放中',
+        self::STATE_REJECT => '被拒绝',
+    ];
+
 }

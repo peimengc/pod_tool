@@ -22,14 +22,11 @@ class CreateDouplusTasksTable extends Migration
             $table->string('state')->index()->comment('状态');
             $table->string('budget')->nullable()->comment('投放金额');
             $table->timestamp('create_time')->index()->comment('创建时间');
-            $table->string('reject_reason')->nullable()->comment('状态描述');
+            $table->string('reject_reason')->nullable()->comment('未通过原因');
             $table->string('state_desc')->nullable()->comment('状态描述');
-            $table->text('ad_stat')->nullable()->comment('运营结果');
-            $table->string('item_cover')->nullable()->comment('封面图');
 
             $table->string('product_id')->nullable()->index()->comment('商品id');
 
-            $table->string('total_balance')->nullable()->comment('余额');
             $table->string('duration')->nullable()->comment('投放时长，小时');
             $table->string('cost')->nullable()->default(0)->comment('本条消耗');
             $table->timestamps();

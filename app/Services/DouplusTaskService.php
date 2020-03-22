@@ -20,6 +20,17 @@ class DouplusTaskService
         $this->douplusTask = new DouplusTask();
     }
 
+    public function updateByTaskInfo(DouplusTask $douplusTask, $attr)
+    {
+        $douplusTask->fill([
+            'state' => $attr['ad_info']['state'],
+            'cost' => $attr['ad_stat']['cost'],
+            'state_desc' => $attr['ad_info']['state_desc'],
+            'reject_reason' => $attr['ad_info']['extra']['reject_reason'] ?? '',
+            'duration' => $attr['ad_info']['duration'],
+        ])->save();
+    }
+
     public function save(DouyinUser $douyinUser, array $attributes)
     {
         $attributes = $this->filterAttributes($douyinUser, $attributes);
@@ -40,12 +51,11 @@ class DouplusTaskService
         return $this->douplusTask->whereIn('task_id', $taskIds)->pluck('task_id');
     }
 
-
     protected function filterAttributes(DouyinUser $douyinUser, array $attributes)
     {
         $date = now()->toDateTimeString();
 
-        return collect($attributes)->map(function ($item) use ($douyinUser,$date) {
+        return collect($attributes)->map(function ($item) use ($douyinUser, $date) {
             return [
                 'douyin_auth_id' => $douyinUser->id,
                 'aweme_id' => $item['ad_info']['item_id'],
@@ -56,8 +66,6 @@ class DouplusTaskService
                 'create_time' => $item['ad_info']['create_time'],
                 'reject_reason' => $item['ad_info']['extra']['reject_reason'] ?? '',
                 'state_desc' => $item['ad_info']['state_desc'],
-                'ad_stat' => json_encode($item['ad_stat']),
-                'item_cover' => $item['ad_info']['item_cover'],
                 'created_at' => $date,
                 'updated_at' => $date,
             ];

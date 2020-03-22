@@ -25,4 +25,9 @@ class DouyinUser extends Model
         return 'sessionid=' . ($this->dy_cookie['sessionid'] ?? '');
     }
 
+    public function douplusTasks()
+    {
+        return $this->hasMany(DouplusTask::class,'douyin_auth_id','id');
+    }
+
 }
