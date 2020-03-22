@@ -15,7 +15,7 @@
                             <select name="douyin_user_id" id="douyin_user_id" class="form-control">
                                 <option value="">请选择抖音账号</option>
                                 @foreach($douyinUsers as $k=>$v)
-                                    <option @if(request('tk_status')==$k) selected @endif value="{{$k}}">{{$v}}</option>
+                                    <option @if(request('douyin_user_id')==$k) selected @endif value="{{$k}}">{{$v}}</option>
                                 @endforeach
                             </select>
                         </div>
