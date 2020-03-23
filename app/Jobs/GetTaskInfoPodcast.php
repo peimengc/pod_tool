@@ -50,6 +50,7 @@ class GetTaskInfoPodcast implements ShouldQueue
             $this->douyinUser->douplusTasks()
                 ->whereNotIn('state', [DouplusTask::STATE_OVER, DouplusTask::STATE_REJECT])
                 ->orWhereNull('cost')
+                ->get()
                 ->each(function (DouplusTask $douplusTask) use ($api, $taskService, &$data) {
 
                     $resArr = $api->taskInfo($douplusTask->task_id, $this->douyinUser->sessionid);

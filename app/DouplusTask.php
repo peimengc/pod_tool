@@ -28,14 +28,16 @@ class DouplusTask extends Model
         'ad_stat' => 'json'
     ];
 
-    const STATE_OVER = 1;
-    const STATE_RUN = 2;
+    const STATE_RUN = 1;
+    const STATE_REVIEW = 2;
     const STATE_REJECT = 3;
+    const STATE_OVER = 4;
 
     public static $stateArr = [
         self::STATE_OVER => '投放完成',
         self::STATE_RUN => '投放中',
         self::STATE_REJECT => '被拒绝',
+        self::STATE_REVIEW => '审核中',
     ];
 
 }
