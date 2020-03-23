@@ -146,7 +146,7 @@ return [
                 'connection' => 'redis',
                 'queue' => ['default'],
                 'balance' => 'simple',
-                'processes' => 20,
+                'processes' => env('HORIZON_PROCESSES',10),
                 'tries' => 1,
             ],
         ],
