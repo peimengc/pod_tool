@@ -23,7 +23,7 @@ class RoiController extends Controller
                 0 as num
             ')
             ->whereDate('douplus_task_books.created_at', $date)
-            ->where('douplus_task_books.aweme_author_id', '1279426502601851');
+            ->where('douplus_task_books.aweme_author_id',  $douyinUser->dy_uid);
 
         $order = AlimamaOrder::query()
             ->selectRaw('
