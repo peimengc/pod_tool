@@ -95,7 +95,7 @@
 
     <div class="container py-4">
 
-        @if (session('status'))
+        @if (session('status.content'))
             <div class="alert alert-{{ session('status.type','success') }}" role="alert">
                 {{ session('status.content') }}
             </div>
