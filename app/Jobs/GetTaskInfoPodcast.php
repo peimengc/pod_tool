@@ -59,6 +59,8 @@ class GetTaskInfoPodcast implements ShouldQueue
 
                     $taskService->updateByTaskInfo($douplusTask, $resArr);
 
+                    sleep(1.5);
+
                 });
 
             $taskBookService->save($data);

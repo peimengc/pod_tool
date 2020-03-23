@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         //定时获取抖音投放任务
-        $schedule->command('douyin:get-task-list')->everyMinute();
+        $schedule->command('douyin:get-task-list')->everyFiveMinutes();
         //定时获取抖音消耗详情
         $schedule->command('douyin:get-task-info')->everyFifteenMinutes();
         //获取淘宝订单
