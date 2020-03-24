@@ -11,6 +11,7 @@ use App\Services\DouplusTaskBookService;
 use App\Services\DouplusTaskService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -48,8 +49,10 @@ class GetTaskInfoPodcast implements ShouldQueue
 
         try {
             $this->douyinUser->douplusTasks()
-                ->whereNotIn('state', [DouplusTask::STATE_OVER, DouplusTask::STATE_REJECT])
-                ->orWhereNull('cost')
+                ->where(function ($builder) {
+                    $builder->whereNotIn('state', [DouplusTask::STATE_OVER, DouplusTask::STATE_REJECT])
+                        ->orWhereNull('cost');
+                })
                 ->get()
                 ->each(function (DouplusTask $douplusTask) use ($api, $taskService, &$data) {
 
