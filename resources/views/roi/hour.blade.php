@@ -21,6 +21,21 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <tr>
+                        <th>合计</th>
+                        <th>{{ $roiSum['total_amount'] }}({{ $roiSum['total_num'] }})</th>
+                        <th>{{ $roiSum['valid_amount'] }}({{ $roiSum['valid_num'] }})</th>
+                        <th>{{ $roiSum['invalid_amount'] }}({{ $roiSum['invalid_num'] }})</th>
+                        <th>{{ $roiSum['cost'] }} </th>
+                        <th>{{  $roiSum['valid_amount'] - $roiSum['cost'] }} </th>
+                        <th>
+                            @if($roiSum['cost'] > 0)
+                                {{ round($roiSum['valid_amount'] / $roiSum['cost'],2)  }}
+                            @else
+                                0
+                            @endif
+                        </th>
+                    </tr>
                     @foreach($roi as $value)
                         <tr>
                             <td>{{ $value->hour }}</td>

@@ -52,7 +52,17 @@ class RoiController extends Controller
             ->groupBy('hour')
             ->orderByDesc('hour')
             ->get();
+        //合计
+        $roiSum = [
+            'cost' => $roi->sum('cost'),
+            'total_amount' => $roi->sum('total_amount'),
+            'total_num' => $roi->sum('total_num'),
+            'valid_amount' => $roi->sum('valid_amount'),
+            'valid_num' => $roi->sum('valid_num'),
+            'invalid_amount' => $roi->sum('invalid_amount'),
+            'invalid_num' => $roi->sum('invalid_num'),
+        ];
 
-        return view('roi.hour',compact('roi','douyinUser'));
+        return view('roi.hour',compact('roi','douyinUser','roiSum'));
     }
 }
