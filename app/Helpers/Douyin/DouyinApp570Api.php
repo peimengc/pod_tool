@@ -17,7 +17,7 @@ class DouyinApp570Api
         $this->client = new Client();
     }
 
-    public function taskList($cookie, $page = 1, $limit = 30)
+    public function taskList($cookie, $page = 1, $limit = 20)
     {
         $query = [
             'page' => $page,
