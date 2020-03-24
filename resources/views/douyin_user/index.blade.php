@@ -39,46 +39,48 @@
             </form>
         </div>
         <div class="col-md-12">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">账号</th>
-                    <th scope="col">类型</th>
-                    <th scope="col">登录状态</th>
-                    <th scope="col">粉丝</th>
-                    <th scope="col">赞</th>
-                    <th scope="col">操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($users as $user)
+            <div class="table-responsive">
+                <table class="table" style="min-width: 45rem">
+                    <thead>
                     <tr>
-                        <td>{{ $user->dy_nickname }}</td>
-                        <td>
-                            @if($user->type == 1)
-                                <span class="badge badge-pill badge-warning">投产号</span>
-                            @else
-                                <span class="badge badge-pill badge-primary">橱窗号</span>
-                            @endif
-                        </td>
-                        <td>
-                            @if($user->dy_cookie)
-                                <span class="badge badge-pill badge-success">已登录</span>
-                            @else
-                                <span class="badge badge-pill badge-danger">登录失效</span>
-                            @endif
-                        </td>
-                        <td>{{ $user->follower }}</td>
-                        <td>{{ $user->favorited }}</td>
-                        <td>
-                            <div class="btn-group-sm">
-                                <a href="{{ route('roi.hour',$user) }}" class="btn btn-primary">ROI</a>
-                            </div>
-                        </td>
+                        <th scope="col">账号</th>
+                        <th scope="col">类型</th>
+                        <th scope="col">登录状态</th>
+                        <th scope="col">粉丝</th>
+                        <th scope="col">赞</th>
+                        <th scope="col">操作</th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @foreach($users as $user)
+                        <tr>
+                            <td>{{ $user->dy_nickname }}</td>
+                            <td>
+                                @if($user->type == 1)
+                                    <span class="badge badge-pill badge-warning">投产号</span>
+                                @else
+                                    <span class="badge badge-pill badge-primary">橱窗号</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if($user->dy_cookie)
+                                    <span class="badge badge-pill badge-success">已登录</span>
+                                @else
+                                    <span class="badge badge-pill badge-danger">登录失效</span>
+                                @endif
+                            </td>
+                            <td>{{ $user->follower }}</td>
+                            <td>{{ $user->favorited }}</td>
+                            <td>
+                                <div class="btn-group-sm">
+                                    <a href="{{ route('roi.hour',$user) }}" class="btn btn-primary">ROI</a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="col-md-12">
             {{$users->links()}}

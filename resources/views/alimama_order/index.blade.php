@@ -15,7 +15,8 @@
                             <select name="douyin_user_id" id="douyin_user_id" class="form-control">
                                 <option value="">请选择抖音账号</option>
                                 @foreach($douyinUsers as $k=>$v)
-                                    <option @if(request('douyin_user_id')==$k) selected @endif value="{{$k}}">{{$v}}</option>
+                                    <option @if(request('douyin_user_id')==$k) selected
+                                            @endif value="{{$k}}">{{$v}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -39,34 +40,36 @@
             </form>
         </div>
         <div class="col-md-12">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">商品</th>
-                    <th scope="col">状态</th>
-                    <th scope="col">提成比例</th>
-                    <th scope="col">付款金额</th>
-                    <th scope="col">佣金</th>
-                    <th scope="col">账号</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($orders as $order)
+            <div class="table-responsive">
+                <table class="table" style="min-width: 60rem">
+                    <thead>
                     <tr>
-                        <td>
-                            <a href="{{ $order->item_link }}" target="_blank">
-                                {{ $order->item_title }}
-                            </a>
-                        </td>
-                        <td>{{ $order->tk_status_desc }}</td>
-                        <td>{{ $order->tk_total_rate }}%</td>
-                        <td>{{ $order->alipay_total_price }}</td>
-                        <td>{{ $order->pub_share_pre_fee }}</td>
-                        <td>{{ $order->douyinUser->dy_nickname }} </td>
+                        <th scope="col">商品</th>
+                        <th scope="col">状态</th>
+                        <th scope="col">提成比例</th>
+                        <th scope="col">付款金额</th>
+                        <th scope="col">佣金</th>
+                        <th scope="col">账号</th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @foreach($orders as $order)
+                        <tr>
+                            <td>
+                                <a href="{{ $order->item_link }}" target="_blank">
+                                    {{ $order->item_title }}
+                                </a>
+                            </td>
+                            <td>{{ $order->tk_status_desc }}</td>
+                            <td>{{ $order->tk_total_rate }}%</td>
+                            <td>{{ $order->alipay_total_price }}</td>
+                            <td>{{ $order->pub_share_pre_fee }}</td>
+                            <td>{{ $order->douyinUser->dy_nickname }} </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="col-md-12">
             {{$orders->links()}}
