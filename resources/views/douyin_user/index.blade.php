@@ -40,7 +40,7 @@
         </div>
         <div class="col-md-12">
             <div class="table-responsive">
-                <table class="table" style="min-width: 45rem">
+                <table class="table account-table" style="min-width: 45rem">
                     <thead>
                     <tr>
                         <th scope="col">账号</th>
@@ -54,7 +54,16 @@
                     <tbody>
                     @foreach($users as $user)
                         <tr>
-                            <td>{{ $user->dy_nickname }}</td>
+                            <td>
+                                <div class="row middle-xs account">
+                                    <div class="col-xs img"
+                                         style="background-image: url('{{ $user->dy_avatar_url }}')"></div>
+                                    <div class="col-xs content">
+                                        <h4>{{ $user->dy_nickname }}</h4>
+                                        <p>{{ $user->dy_unique_id ?: $user->dy_short_id }}</p>
+                                    </div>
+                                </div>
+                            </td>
                             <td>
                                 @if($user->type == 1)
                                     <span class="badge badge-pill badge-warning">投产号</span>
@@ -101,6 +110,22 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('css')
+    <style>
+        .account-table td {
+            vertical-align: middle!important;
+        }
+        .account .img {
+            border-radius: 10px;
+            background: no-repeat;
+            background-size: cover;
+            max-width: 80px;
+            height: 80px;
+        }
+
+    </style>
 @endsection
 
 @section('js')
