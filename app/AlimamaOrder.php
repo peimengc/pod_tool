@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
@@ -80,12 +81,17 @@ class AlimamaOrder extends Model
 
     public function getTkStatusDescAttribute()
     {
-        return Arr::get(self::$tkStatusArr,$this->tk_status);
+        return Arr::get(self::$tkStatusArr, $this->tk_status);
+    }
+
+    public function getHesitateTimeAttribute()
+    {
+        return $this->tk_paid_time ? Carbon::parse($this->click_time)->diffForHumans($this->tk_paid_time) : '';
     }
 
     public function douyinUser()
     {
-        return $this->belongsTo(DouyinUser::class,'douyin_user_id','id')
-            ->withDefault(['dy_nickname'=>'']);
+        return $this->belongsTo(DouyinUser::class, 'douyin_user_id', 'id')
+            ->withDefault(['dy_nickname' => '']);
     }
 }

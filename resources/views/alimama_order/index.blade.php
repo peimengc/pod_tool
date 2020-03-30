@@ -41,13 +41,12 @@
         </div>
         <div class="col-md-12">
             <div class="table-responsive">
-                <table class="table" style="min-width: 60rem">
+                <table class="table data-table" style="min-width: 60rem">
                     <thead>
                     <tr>
                         <th scope="col">商品</th>
                         <th scope="col">状态</th>
                         <th scope="col">提成比例</th>
-                        <th scope="col">付款金额</th>
                         <th scope="col">佣金</th>
                         <th scope="col">账号</th>
                     </tr>
@@ -56,14 +55,25 @@
                     @foreach($orders as $order)
                         <tr>
                             <td>
-                                <a href="{{ $order->item_link }}" target="_blank">
-                                    {{ $order->item_title }}
-                                </a>
+                                <div class="row middle-xs data">
+                                    <div class="img" style="background-image: url('{{$order->item_img}}')"></div>
+                                    <div class="content">
+                                        <a href="{{ $order->item_link }}" target="_blank">
+                                            {{ $order->item_title }}
+                                        </a><br>
+                                        <span>点击时间: {{ $order->click_time }}</span>
+                                        <span>犹豫时长: {{ $order->hesitate_time }}</span><br>
+                                        <span>创建时间: {{ $order->tk_create_time }}</span><br>
+                                        <span>付款时间: {{ $order->tk_paid_time }}</span>
+                                        <span>付款金额: {{ $order->alipay_total_price }}</span>
+                                    </div>
+                                </div>
                             </td>
                             <td>{{ $order->tk_status_desc }}</td>
                             <td>{{ $order->tk_total_rate }}%</td>
-                            <td>{{ $order->alipay_total_price }}</td>
-                            <td>{{ $order->pub_share_pre_fee }}</td>
+                            <td>
+                                付款预估: {{ $order->pub_share_pre_fee }}<br>
+                            </td>
                             <td>{{ $order->douyinUser->dy_nickname }} </td>
                         </tr>
                     @endforeach
@@ -75,4 +85,27 @@
             {{$orders->links()}}
         </div>
     </div>
+@endsection
+
+@section('css')
+    <style>
+        .data-table td {
+            vertical-align: middle !important;
+        }
+        .data .img {
+            border-radius: 10px;
+            background: no-repeat;
+            background-size: cover;
+            width: 90px;
+            height: 90px;
+        }
+
+        .data .content {
+            white-space: nowrap;
+            text-overflow:ellipsis;
+            overflow: hidden;
+            margin-left: 5px;
+            font-size: 13px;
+        }
+    </style>
 @endsection
