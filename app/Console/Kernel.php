@@ -30,6 +30,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('douyin:get-task-info')->everyFifteenMinutes();
         //获取淘宝订单
         $schedule->command('dingdanxia:get-order-details')->everyFiveMinutes();
+        //定时获取账号视频
+        $schedule->command('douyin:get-aweme-post')->everyFiveMinutes();
     }
 
     /**
