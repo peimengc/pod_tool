@@ -38,7 +38,7 @@ class DouyinWebApi
      */
     public function checkQrconnect(string $token)
     {
-        $attr = [];
+        $cookies = null;
 
         $request = (new Client())->request(
             'GET',
@@ -69,14 +69,6 @@ class DouyinWebApi
                 //cookie
                 $cookies = $this->getCookies($request->getHeaders());
 
-                $cookieStr = 'sessionid=' . $cookies['sessionid'];
-                //账号信息
-                $userInfo = $this->getUserInfo($cookieStr, $cookies);
-                //淘宝mm码
-                $tbSubPid = $this->getSubPid($cookieStr);
-
-                $attr = $userInfo + $tbSubPid;
-
                 $res = [
                     'data' => compact('status'),
                 ];
@@ -85,15 +77,15 @@ class DouyinWebApi
                 throw new \Exception('抖音二维码登录异常');
         }
 
-        return [$res, $attr];
+        return [$res, $cookies];
     }
 
     /**
      * 根据cookie获取userinfo
-     * @param $cookies
+     * @param $cookieStr
      * @return array
      */
-    protected function getUserInfo($cookieStr, $cookies)
+    public function getUserInfo($cookieStr)
     {
         $response = (new Client())->request(
             'GET',
@@ -106,19 +98,7 @@ class DouyinWebApi
             ]
         )->getBody()->getContents();
 
-        $resArr = json_decode($response, 1);
-
-        return [
-            'dy_avatar_url' => $resArr['user']['avatar_thumb']['url_list'][0],
-            'dy_uid' => $resArr['user']['uid'],
-            'dy_unique_id' => $resArr['user']['unique_id'],
-            'dy_short_id' => $resArr['user']['short_id'],
-            'dy_nickname' => $resArr['user']['nickname'],
-            'favorited' => $resArr['user']['total_favorited'],
-            'follower' => $resArr['user']['follower_count'],
-            'dy_cookie' => $cookies,
-        ];
-
+        return json_decode($response, 1);
     }
 
     /**
@@ -142,29 +122,28 @@ class DouyinWebApi
     }
 
     /**
-     * 获取淘宝sub_pid
-     * @param $cookies
-     * @return array
+     * 获取视频列表
+     * @param $cookie
+     * @param int $max_cursor 分页数据,原样传
+     * @return mixed
      */
-    protected function getSubPid($cookieStr)
+    public function getAwemePost($cookie,$max_cursor=0)
     {
-        $response = (new Client())->request(
-            'GET',
-            'https://lianmeng.snssdk.com/user/subpid/getSubpid?version_code=8.1.0&pass-region=1&pass-route=1&js_sdk_version=1.32.2.1&app_name=aweme&vid=53601C0B-AA28-4270-BE99-CC45410FE646&app_version=8.1.0&device_id=66493333807&channel=App%20Store&mcc_mnc=46002&aid=1128&screen_width=1125&openudid=e6012c91eff5a4fd33c0b617979c4e498eab218f&os_api=18&ac=WIFI&os_version=13.0&device_platform=iphone&build_number=81017&device_type=iPhone10,3&iid=87445999129&idfa=51CA298D-F332-4976-8668-DBE8A28A699B&b_type_new=2&os=iOS&pid_type=1&request_tag_from=h5',
-            [
-                'headers' => [
-                    'Cookie' => $cookieStr,
-                    'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'
-                ]
-            ]
-        )->getBody()->getContents();
-
-        $resArr = json_decode($response, 1);
-
-        return [
-            'tb_sub_pid' => $resArr['data']['sub_pid'],
-            'tb_adzone_id' => $resArr['data']['sub_pid'] ? explode('_', $resArr['data']['sub_pid'])[3] : ''
+        $query = [
+            'scene' => 'mix',
+            'status' => '1',
+            'count' => '12',
+            'max_cursor' => $max_cursor
         ];
 
+        $resJson = (new Client())->request('get',config('douyin_api.web_api.media_aweme_post'),[
+            'query' => $query,
+            'headers' => [
+                'Cookie' => $cookie,
+                'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36',
+            ]
+        ])->getBody()->getContents();
+
+        return json_decode($resJson,1);
     }
 }
