@@ -121,7 +121,7 @@
             border-radius: 10px;
             background: no-repeat;
             background-size: cover;
-            width: 80px;
+            max-width: 80px;
             height: 80px;
         }
 
