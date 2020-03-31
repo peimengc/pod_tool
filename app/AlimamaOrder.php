@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
@@ -14,7 +15,21 @@ class AlimamaOrder extends Model
     const TK_STATUS_PAYMENT = 12;
     const TK_STATUS_GET = 14;
 
-    public static $tkStatusArr = [
+    const DATE_TYPE_CLICK = 'click_time';
+    const DATE_TYPE_CREATE = 'tk_create_time';
+    const DATE_TYPE_PAID = 'tk_paid_time';
+    const DATE_TYPE_EARN = 'tk_earning_time';
+
+    public $dateTypeArr = [
+        self::DATE_TYPE_CREATE => '创建时间',
+        self::DATE_TYPE_CLICK => '点击时间',
+        self::DATE_TYPE_PAID => '付款时间',
+        self::DATE_TYPE_EARN => '结算时间',
+    ];
+
+    public $defaultDateType = self::DATE_TYPE_CREATE;
+
+    public $tkStatusArr = [
         self::TK_STATUS_CLOSED => '已失效',
         self::TK_STATUS_PAID => '已结算',
         self::TK_STATUS_PAYMENT => '已付款',
@@ -81,17 +96,24 @@ class AlimamaOrder extends Model
 
     public function getTkStatusDescAttribute()
     {
-        return Arr::get(self::$tkStatusArr, $this->tk_status);
+        return Arr::get($this->tkStatusArr, $this->tk_status);
     }
 
     public function getHesitateTimeAttribute()
     {
-        return $this->tk_paid_time ? Carbon::parse($this->click_time)->diffForHumans($this->tk_paid_time) : '';
+        return $this->tk_paid_time ? Carbon::parse($this->tk_paid_time)->diffForHumans($this->click_time) : '';
     }
 
     public function douyinUser()
     {
         return $this->belongsTo(DouyinUser::class, 'douyin_user_id', 'id')
             ->withDefault(['dy_nickname' => '']);
+    }
+
+    public function scopeDate(Builder $builder)
+    {
+        $field = request('date-type', $this->defaultDateType);
+        $builder->whereDate($field, '>=', request('start-date', now()->toDateString()))
+            ->whereDate($field, '<', request('end-date', now()->addDay()->toDateString()));
     }
 }

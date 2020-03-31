@@ -15,7 +15,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" type="text/css" >
+    <link rel="stylesheet" href="{{ asset('asset/jQuery.cxCalendar-1.5.3/css/jquery.cxcalendar.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css"
+          type="text/css">
     @yield('css')
 </head>
 <body>
@@ -108,5 +110,17 @@
 </body>
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('asset/jQuery.cxCalendar-1.5.3/js/jquery.cxcalendar.min.js') }}"></script>
+<script src="{{ asset('asset/jQuery.cxCalendar-1.5.3/js/jquery.cxcalendar.languages.js') }}"></script>
+<script>
+    $('input.datetime').cxCalendar({
+        type: 'datetime',
+        format: 'YYYY-MM-DD HH:mm:ss'
+    });
+    $('input.date').cxCalendar({
+        type: 'date',
+        format: 'YYYY-MM-DD'
+    });
+</script>
 @yield('js')
 </html>

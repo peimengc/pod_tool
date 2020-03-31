@@ -71,11 +71,11 @@ class AlimamaOrderService
     {
         return $this->model
             ->with('douyinUser')
+            ->scopes(['date'])
             ->when(request('tk_status'), function ($builder, $tk_status) {
                 $builder->whereIn('tk_status', Arr::wrap($tk_status));
             })
             ->when(request('douyin_user_id'), function ($builder, $douyin_user_id) {
-
                 $builder->whereIn('douyin_user_id', Arr::wrap($douyin_user_id));
             })
             ->orderByDesc('tk_create_time')
