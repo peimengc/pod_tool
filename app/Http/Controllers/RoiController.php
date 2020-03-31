@@ -29,7 +29,7 @@ class RoiController extends Controller
             ->selectRaw('
                 date_format(tk_create_time,\'%H:00\') as hour,
                 0 as cost,
-                pub_share_pre_fee*0.9 as order_amount,
+                pub_share_pre_fee*0.9 as pub_share_pre_fee,
                 1 as num,
                 tk_status
             ')
@@ -41,11 +41,11 @@ class RoiController extends Controller
             ->selectRaw('
                 hour,
                 sum(cost) as cost,
-                sum(order_amount) as total_amount,
+                sum(pub_share_pre_fee) as total_amount,
                 sum(num) as total_num,
-                sum(case when tk_status = 0 || tk_status = '.AlimamaOrder::TK_STATUS_CLOSED.' then 0 else order_amount end) as valid_amount,
+                sum(case when tk_status = 0 || tk_status = '.AlimamaOrder::TK_STATUS_CLOSED.' then 0 else pub_share_pre_fee end) as valid_amount,
                 sum(case when tk_status = 0 || tk_status = '.AlimamaOrder::TK_STATUS_CLOSED.' then 0 else 1 end) as valid_num,
-                sum(case when tk_status = '.AlimamaOrder::TK_STATUS_CLOSED.' then order_amount else 0 end) as invalid_amount,
+                sum(case when tk_status = '.AlimamaOrder::TK_STATUS_CLOSED.' then pub_share_pre_fee else 0 end) as invalid_amount,
                 sum(case when tk_status = '.AlimamaOrder::TK_STATUS_CLOSED.' then 1 else 0 end) as invalid_num
             ')
             ->fromSub($order, 'order')

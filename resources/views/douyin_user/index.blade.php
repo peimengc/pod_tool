@@ -48,7 +48,6 @@
                         <th scope="col">登录状态</th>
                         <th scope="col">粉丝</th>
                         <th scope="col">赞</th>
-                        <th scope="col">操作</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -80,11 +79,6 @@
                             </td>
                             <td>{{ $user->follower }}</td>
                             <td>{{ $user->favorited }}</td>
-                            <td>
-                                <div class="btn-group-sm">
-                                    <a href="{{ route('roi.hour',$user) }}" class="btn btn-primary">ROI</a>
-                                </div>
-                            </td>
                         </tr>
                     @endforeach
                     </tbody>

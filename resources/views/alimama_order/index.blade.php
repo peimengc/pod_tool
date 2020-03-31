@@ -5,87 +5,71 @@
 @section('content')
     <div class="row bg-white py-4 px-2">
         <div class="col-md-12">
-            <h4>抖音账号列表</h4>
-            <p>所有抖音账号</p>
+            <h4>订单列表</h4>
+            <p>淘宝订单列表，默认展示最近七天内的订单</p>
         </div>
         <div class="col-md-12">
             <form>
                 <div class="form-row align-items-center">
                     <div class="col-md-3">
                         <div class="input-group mb-2">
-                            <label class="sr-only" for="date-type">时间类型</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">时间类型</span>
-                                </div>
-                                <select name="date-type" id="date-type" class="form-control">
-                                    @foreach($orderModel->dateTypeArr as $k=>$v)
-                                        <option @if(request('date-type',$orderModel->defaultDateType)==$k) selected
-                                                @endif value="{{$k}}">{{$v}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">时间类型</span>
                             </div>
+                            <select name="date-type" id="date-type" class="form-control">
+                                @foreach($orderModel->dateTypeArr as $k=>$v)
+                                    <option @if(request('date-type',$orderModel->defaultDateType)==$k) selected
+                                            @endif value="{{$k}}">{{$v}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="input-group mb-2">
-                            <label class="sr-only" for="start-date">开始时间</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">开始时间</span>
-                                </div>
-                                <input class="form-control date" id="start-date" name="start-date"
-                                       value="{{ request('start-date',now()->toDateString()) }}" type="text"
-                                       placeholder="开始时间">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">开始时间</span>
                             </div>
+                            <input class="form-control date" id="start-date" name="start-date"
+                                   value="{{ request('start-date',$orderModel->defaultStartDate()) }}" type="text"
+                                   placeholder="开始时间">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="input-group mb-2">
-                            <label class="sr-only" for="end-date">结束时间</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">结束时间</span>
-                                </div>
-                                <input class="form-control date" id="end-date" name="end-date"
-                                       value="{{ request('end-date',now()->addDay()->toDateString()) }}" type="text"
-                                       placeholder="结束时间">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">结束时间</span>
                             </div>
-
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="sr-only" for="douyin_user_id">抖音账号</label>
-                        <div class="input-group mb-2">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">抖音账号</span>
-                                </div>
-                                <select name="douyin_user_id" id="douyin_user_id" class="form-control">
-                                    <option value="">全部抖音号</option>
-                                    @foreach($douyinUsers as $k=>$v)
-                                        <option @if(request('douyin_user_id')==$k) selected
-                                                @endif value="{{$k}}">{{$v}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            <input class="form-control date" id="end-date" name="end-date"
+                                   value="{{ request('end-date',$orderModel->defaultEndDate()) }}" type="text"
+                                   placeholder="结束时间">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="input-group mb-2">
-                            <label class="sr-only" for="tk_status">订单状态</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">订单状态</span>
-                                </div>
-                                <select name="tk_status" id="tk_status" class="form-control">
-                                    <option value="">全部状态</option>
-                                    @foreach($orderModel->tkStatusArr as $k=>$v)
-                                        <option @if(request('tk_status')==$k) selected
-                                                @endif value="{{$k}}">{{$v}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">抖音账号</span>
                             </div>
+                            <select name="douyin_user_id" id="douyin_user_id" class="form-control">
+                                <option value="">全部抖音号</option>
+                                @foreach($douyinUsers as $k=>$v)
+                                    <option @if(request('douyin_user_id')==$k) selected
+                                            @endif value="{{$k}}">{{$v}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">订单状态</span>
+                            </div>
+                            <select name="tk_status" id="tk_status" class="form-control">
+                                <option value="">全部状态</option>
+                                @foreach($orderModel->tkStatusArr as $k=>$v)
+                                    <option @if(request('tk_status')==$k) selected
+                                            @endif value="{{$k}}">{{$v}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-3">

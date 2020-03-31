@@ -24,11 +24,10 @@ class DouyinUserController extends Controller
     public function index(DouyinUser $douyinUser, Request $request)
     {
         $users = $douyinUser->newQuery()
-            ->when($request->query('keywords'), function (Builder $builder, $keywords) {
-                $builder->where('dy_nickname', 'like', "%{$keywords}%");
-            })
+            ->scopes(['nickname'])
             ->orderByDesc('updated_at')
-            ->paginate();
+            ->paginate()
+            ->appends($request->all());
 
         return view('douyin_user.index', compact('users'));
     }
@@ -45,7 +44,7 @@ class DouyinUserController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function checkQrconnect($token, Request $request, DouyinUser $douyinUser,DouyinApp570Api $api)
+    public function checkQrconnect($token, Request $request, DouyinUser $douyinUser, DouyinApp570Api $api)
     {
         list($res, $cookies) = $this->douyinWebApi->checkQrconnect($token);
 

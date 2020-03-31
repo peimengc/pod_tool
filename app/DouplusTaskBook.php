@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Scopes\DateScopeTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class DouplusTaskBook extends Model
 {
+    use DateScopeTrait;
+
     protected $fillable = [
         'douyin_auth_id',
         'aweme_id',

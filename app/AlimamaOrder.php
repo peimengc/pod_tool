@@ -2,13 +2,15 @@
 
 namespace App;
 
+use App\Scopes\DateScopeTrait;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
 class AlimamaOrder extends Model
 {
+    use DateScopeTrait;
+
     //12-付款，13-关闭，14-确认收货，3-结算成功
     const TK_STATUS_CLOSED = 13;
     const TK_STATUS_PAID = 3;
@@ -110,10 +112,8 @@ class AlimamaOrder extends Model
             ->withDefault(['dy_nickname' => '']);
     }
 
-    public function scopeDate(Builder $builder)
+    public function getDateField()
     {
-        $field = request('date-type', $this->defaultDateType);
-        $builder->whereDate($field, '>=', request('start-date', now()->toDateString()))
-            ->whereDate($field, '<', request('end-date', now()->addDay()->toDateString()));
+        return request('date-type', $this->defaultDateType);
     }
 }

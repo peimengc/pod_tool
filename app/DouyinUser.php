@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class DouyinUser extends Model
@@ -27,7 +28,14 @@ class DouyinUser extends Model
 
     public function douplusTasks()
     {
-        return $this->hasMany(DouplusTask::class,'douyin_auth_id','id');
+        return $this->hasMany(DouplusTask::class, 'douyin_auth_id', 'id');
+    }
+
+    public function scopeNickname(Builder $builder, $nickname = null)
+    {
+        $builder->when($nickname ?: request('keywords'), function (Builder $builder, $keywords) {
+            $builder->where('dy_nickname', 'like', "%{$keywords}%");
+        });
     }
 
 }
