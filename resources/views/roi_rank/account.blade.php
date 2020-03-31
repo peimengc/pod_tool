@@ -98,7 +98,7 @@
                             </td>
                             <td>
                                 <div class="btn-group-sm">
-                                    <a href="{{ route('roi.hour',$account) }}" class="btn btn-primary">ROI</a>
+                                    <a href="{{ route('roi.hour',$account) }}" class="btn btn-primary">详情</a>
                                 </div>
                             </td>
                         </tr>
