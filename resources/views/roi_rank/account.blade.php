@@ -49,7 +49,7 @@
         </div>
         <div class="col-md-12">
             <div class="table-responsive">
-                <table class="table account-table" style="min-width: 45rem">
+                <table class="table account-table" style="min-width: 65rem">
                     <thead>
                     <tr>
                         <th scope="col">账号</th>
@@ -71,7 +71,7 @@
                                     <div class="col-xs img"
                                          style="background-image: url('{{ $account->dy_avatar_url }}')"></div>
                                     <div class="col-xs content">
-                                        <h4>{{ $account->dy_nickname }}</h4>
+                                        <b>{{ $account->dy_nickname }}</b>
                                         <p>{{ $account->dy_unique_id ?: $account->dy_short_id }}</p>
                                     </div>
                                 </div>
@@ -111,21 +111,4 @@
             {{$accounts->links()}}
         </div>
     </div>
-@endsection
-
-@section('css')
-    <style>
-        .account-table td {
-            vertical-align: middle !important;
-        }
-
-        .account .img {
-            border-radius: 10px;
-            background: no-repeat;
-            background-size: cover;
-            max-width: 80px;
-            height: 80px;
-        }
-
-    </style>
 @endsection

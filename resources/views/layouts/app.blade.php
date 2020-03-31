@@ -18,6 +18,19 @@
     <link rel="stylesheet" href="{{ asset('asset/jQuery.cxCalendar-1.5.3/css/jquery.cxcalendar.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css"
           type="text/css">
+
+    <style>
+        .account-table td {
+            vertical-align: middle !important;
+        }
+        .account .img {
+            border-radius: 10px;
+            background: no-repeat;
+            background-size: cover;
+            max-width: 60px;
+            height: 60px;
+        }
+    </style>
     @yield('css')
 </head>
 <body>
