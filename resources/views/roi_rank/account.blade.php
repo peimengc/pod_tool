@@ -6,7 +6,7 @@
     <div class="row bg-white py-4 px-2">
         <div class="col-md-12">
             <h4>ROI统计-账号排行榜</h4>
-            <p>所有抖音账号最近七天的盈利排行榜</p>
+            <p>所有抖音账号最近七天的盈利排行榜，按出单数量排序</p>
         </div>
         <div class="col-md-12">
             <form>

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\AlimamaOrder;
 use App\DouplusTaskBook;
 use App\DouyinUser;
-use Illuminate\Http\Request;
 
 class RoiRankController extends Controller
 {

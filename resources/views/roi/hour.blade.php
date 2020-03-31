@@ -7,6 +7,26 @@
             <p>当前账号: "{{ $douyinUser->dy_nickname }}" </p>
         </div>
         <div class="col-md-12">
+            <form>
+                <div class="form-row align-items-center">
+                    <div class="col-md-3">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">日期</span>
+                            </div>
+                            <input class="form-control date" name="date"
+                                   value="{{ request('date',now()->toDateString()) }}" type="text"
+                                   placeholder="日期">
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary mb-2">提交</button>
+                        <a href="{{route('roi.hour',$douyinUser)}}" class="btn btn-secondary mb-2">重置</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12">
             <div class="table-responsive">
                 <table class="table" style="min-width: 50rem">
                     <thead>
