@@ -6,19 +6,20 @@ use App\DouyinUser;
 use App\Helpers\Api\ApiResponse;
 use App\Helpers\Douyin\DouyinApp570Api;
 use App\Helpers\Douyin\DouyinWebApi;
-use Illuminate\Database\Eloquent\Builder;
+use App\Services\DouyinUserService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 
 class DouyinUserController extends Controller
 {
     use ApiResponse;
 
     public $douyinWebApi;
+    public $service;
 
-    public function __construct(DouyinWebApi $douyinWebApi)
+    public function __construct(DouyinWebApi $douyinWebApi, DouyinUserService $service)
     {
         $this->douyinWebApi = $douyinWebApi;
+        $this->service = $service;
     }
 
     public function index(DouyinUser $douyinUser, Request $request)
@@ -41,6 +42,7 @@ class DouyinUserController extends Controller
      * @param $token
      * @param Request $request
      * @param DouyinUser $douyinUser
+     * @param DouyinApp570Api $api
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
@@ -52,29 +54,16 @@ class DouyinUserController extends Controller
             $douyinUser->dy_cookie = $cookies;
             //账号信息
             $userInfoRes = $this->douyinWebApi->getUserInfo($douyinUser->sessionid);
-
-            $userInfo = [
-                'dy_avatar_url' => $userInfoRes['user']['avatar_thumb']['url_list'][0],
-                'dy_uid' => $userInfoRes['user']['uid'],
-                'dy_unique_id' => $userInfoRes['user']['unique_id'],
-                'dy_short_id' => $userInfoRes['user']['short_id'],
-                'dy_nickname' => $userInfoRes['user']['nickname'],
-                'favorited' => $userInfoRes['user']['total_favorited'],
-                'follower' => $userInfoRes['user']['follower_count'],
-                'dy_cookie' => $cookies,
-            ];
+            //是否存在
+            if ($user = $this->service->getByWhere(['dy_uid' => $userInfoRes['user']['uid']])->first()) {
+                $this->service->update($user, $userInfoRes['user'], $cookies, $request->query('type'));
+            } else {
+                $user = $this->service->create($cookies, $userInfoRes['user'], $request->query('type'));
+            }
             //淘宝mm码
             $tbSubPidRes = $api->getSubPid($douyinUser->sessionid);
 
-            $tbSubPid = [
-                'tb_sub_pid' => $tbSubPidRes['data']['sub_pid'],
-                'tb_adzone_id' => $tbSubPidRes['data']['sub_pid'] ? explode('_', $tbSubPidRes['data']['sub_pid'])[3] : ''
-            ];
-
-            $attr = $userInfo + $tbSubPid;
-
-            $douyinUser->newQuery()
-                ->updateOrCreate(Arr::only($attr, ['dy_uid']), $attr + $request->only('type'));
+            $this->service->updateSubPid($user, $tbSubPidRes['data']['sub_pid']);
         }
 
         return $this->sucWithData($res);

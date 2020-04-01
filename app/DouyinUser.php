@@ -21,6 +21,13 @@ class DouyinUser extends Model
     const TYPE_WORK = 1;
     const TYPE_PROFIT = 2;
 
+
+    public function setTbSubPidAttribute($value)
+    {
+        $this->attributes['tb_sub_pid'] = $value;
+        $this->attributes['tb_adzone_id'] = explode('_', $value)[3];
+    }
+
     public function getSessionidAttribute()
     {
         return 'sessionid=' . ($this->dy_cookie['sessionid'] ?? '');
