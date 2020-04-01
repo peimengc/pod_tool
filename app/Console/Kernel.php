@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\UpdateDouyinUserPodcast;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -32,6 +33,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('dingdanxia:get-order-details')->everyFiveMinutes();
         //定时获取账号视频
         $schedule->command('douyin:get-aweme-post')->everyFiveMinutes();
+        //定时更新抖音账号信息
+        $schedule->job(new UpdateDouyinUserPodcast())->everyThirtyMinutes();
     }
 
     /**
