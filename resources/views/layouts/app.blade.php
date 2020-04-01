@@ -62,6 +62,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link {{ active_class(if_route('douyin_awemes.index')) }}"
+                               href="{{route('douyin_awemes.index')}}">
+                                抖音视频
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link {{ active_class(if_route('alimama_orders.index')) }}"
                                href="{{route('alimama_orders.index')}}">
                                 联盟订单
