@@ -7,6 +7,7 @@ namespace App\Helpers\Douyin;
 use App\Exceptions\DouyinException;
 use App\Exceptions\XgException;
 use GuzzleHttp\Client;
+use Illuminate\Support\Arr;
 
 class DouyinApp570Api
 {
@@ -54,7 +55,7 @@ class DouyinApp570Api
 
         $response = (new Client())->request(
             'GET',
-            'https://lianmeng.snssdk.com/user/subpid/getSubpid',
+            config('douyin_api.app_api.sub_pid'),
             [
                 'query' => $query,
                 'headers' => [
@@ -64,6 +65,48 @@ class DouyinApp570Api
         )->getBody()->getContents();
 
         return json_decode($response, 1);
+    }
+
+    public function getShopPromotion($aweme_id)
+    {
+        $query = [
+            'version_code' => '8.1.0',
+            'pass-region' => '1',
+            'pass-route' => '1',
+            'js_sdk_version' => '1.17.4.3',
+            'app_name' => 'aweme',
+            'vid' => '53601C0B-AA28-4270-BE99-CC45410FE646',
+            'app_version' => '8.1.0',
+            'device_id' => '66493333807',
+            'channel' => 'App%20Store',
+            'mcc_mnc' => '46002',
+            'aid' => '1128',
+            'screen_width' => '1125',
+            'openudid' => 'e6012c91eff5a4fd33c0b617979c4e498eab218f',
+            'os_api' => '18',
+            'ac' => 'WIFI',
+            'os_version' => '13.0',
+            'device_platform' => 'iphone',
+            'build_number' => '81017',
+            'device_type' => 'iPhone10,3',
+            'iid' => '87445999129',
+            'idfa' => '51CA298D-F332-4976-8668-DBE8A28A699B',
+            'sec_author_id' => 'MS4wLjABAAAA8h9X7OQ0800M42pkNNO6yYq4JwC0eYUSls7Y8hazV5M',
+            'author_id' => '14570499127',
+            'aweme_id' => $aweme_id
+        ];
+
+        $response = (new Client())->request(
+            'GET',
+            config('douyin_api.app_api.shop_promotion'),
+            [
+                'query' => $query,
+            ]
+        )->getBody()->getContents();
+
+        $res = json_decode($response, 1);
+
+        return Arr::get(json_decode(Arr::get($res,'promotion'),1),'0.product_id');
     }
 
     public function taskList($cookie, $page = 1, $limit = 20)

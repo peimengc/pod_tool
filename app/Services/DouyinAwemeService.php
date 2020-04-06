@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\DouyinAweme;
+use App\Helpers\Douyin\DouyinApp570Api;
 use Illuminate\Database\Eloquent\Builder;
 
 class DouyinAwemeService
@@ -42,11 +43,13 @@ class DouyinAwemeService
     {
         $date = now()->toDateTimeString();
 
-        return collect($attributes)->map(function ($item) use ($date) {
+        $api = new DouyinApp570Api();
+
+        return collect($attributes)->map(function ($item) use ($date, $api) {
             return [
                 'aweme_id' => $item['aweme_id'],
                 'author_user_id' => $item['author_user_id'],
-                'product_id' => null,
+                'product_id' => $api->getShopPromotion($item['aweme_id']),
                 'desc' => $item['desc'],
                 'create_time' => $item['create_time'],
                 'cover' => $item['video']['cover']['url_list'][0],

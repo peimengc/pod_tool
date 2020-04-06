@@ -25,6 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        //提供任务和队列等待时间和吞吐量信息
+        $schedule->command('horizon:snapshot')->everyFiveMinutes();
         //定时获取抖音投放任务
         $schedule->command('douyin:get-task-list')->everyFiveMinutes();
         //定时获取抖音消耗详情

@@ -26,8 +26,19 @@ class DouyinApiTest extends TestCase
 
         $api = new DouyinApp570Api();
 
-        $res = $api->taskInfo($task_id,$cookie);
+        $res = $api->taskInfo($task_id, $cookie);
 
+        $this->assertTrue($res['status_code'] === 0);
+    }
+
+    public function testShopPromotion()
+    {
+        $aweme_id = '6812555208627932420';
+
+        $api = new DouyinApp570Api();
+
+        $res = $api->getShopPromotion($aweme_id);
+        dd($res);
         $this->assertTrue($res['status_code'] === 0);
     }
 }
