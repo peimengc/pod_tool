@@ -36,11 +36,6 @@
                     <thead>
                     <tr>
                         <th scope="col">视频</th>
-                        <th scope="col">转发</th>
-                        <th scope="col">评论</th>
-                        <th scope="col">点赞</th>
-                        <th scope="col">播放</th>
-                        <th scope="col">分享</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -52,15 +47,15 @@
                                          style="background-image: url('{{ $aweme->cover }}');height: 100px;max-width: 75px"></div>
                                     <div class="col-xs content">
                                         <b><a target="_blank" href="{{ $aweme->share_url }}">{{ $aweme->desc ?: '暂无标题' }}</a></b>
-                                        <p>发布时间:{{ $aweme->create_time }}</p>
+                                        <div>发布时间:{{ $aweme->create_time }}</div>
+                                        <div>
+                                            播放:{{$aweme->play_count}}
+                                            点赞:{{$aweme->digg_count}}
+                                            评论:{{$aweme->comment_count}}
+                                        </div>
                                     </div>
                                 </div>
                             </td>
-                            <td>{{ $aweme->forward_count }}</td>
-                            <td>{{ $aweme->comment_count }}</td>
-                            <td>{{ $aweme->digg_count }}</td>
-                            <td>{{ $aweme->play_count }}</td>
-                            <td>{{ $aweme->share_count }}</td>
                         </tr>
                     @endforeach
                     </tbody>
