@@ -34,6 +34,14 @@ class DouyinAwemeService
         return $existsAwemeId->count() !== $allAwemeId->count();
     }
 
+    public function getProductIds($aweme_ids)
+    {
+        return $this->douyinAweme
+            ->whereIn('aweme_id',$aweme_ids)
+            ->whereNotNull('product_id')
+            ->pluck('product_id','aweme_id');
+    }
+
     protected function getExistsAwemeId($allAwemeId)
     {
         return $this->douyinAweme->whereIn('aweme_id', $allAwemeId)->pluck('aweme_id');

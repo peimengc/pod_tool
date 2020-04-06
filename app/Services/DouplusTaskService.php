@@ -7,6 +7,7 @@ namespace App\Services;
 use App\DouplusTask;
 use App\DouyinUser;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 
 class DouplusTaskService
 {
@@ -55,11 +56,16 @@ class DouplusTaskService
     {
         $date = now()->toDateTimeString();
 
-        return collect($attributes)->map(function ($item) use ($douyinUser, $date) {
+        $attrCollection = collect($attributes);
+
+        $productIds = (new DouyinAwemeService())->getProductIds($attrCollection->pluck('ad_info.item_id'));
+
+        return $attrCollection->map(function ($item) use ($douyinUser, $date, $productIds) {
             return [
                 'douyin_auth_id' => $douyinUser->id,
                 'aweme_id' => $item['ad_info']['item_id'],
                 'aweme_author_id' => $item['ad_info']['item_author_id'],
+                'product_id' => Arr::get($productIds, $item['ad_info']['item_id']),
                 'task_id' => $item['ad_info']['task_id'],
                 'state' => $item['ad_info']['state'],
                 'budget' => $item['ad_info']['budget_int'] / 1000,
