@@ -234,7 +234,7 @@ class DouyinApp570Api
     {
         $resJson = $this->client->request(
             'GET',
-            '47.114.43.205:47101/api?url=' . urlencode($url)
+            '47.114.43.205:47105/api?url=' . urlencode($url)
         )->getBody()->getContents();
 
         $resArr = json_decode($resJson, 1);
