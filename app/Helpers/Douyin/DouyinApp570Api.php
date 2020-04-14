@@ -106,7 +106,7 @@ class DouyinApp570Api
 
         $res = json_decode($response, 1);
 
-        return Arr::get(json_decode(Arr::get($res,'promotion'),1),'0.product_id');
+        return Arr::get(json_decode(Arr::get($res, 'promotion'), 1), '0.product_id');
     }
 
     public function taskList($cookie, $page = 1, $limit = 20)
@@ -145,17 +145,9 @@ class DouyinApp570Api
             'mas' => '01441fc37be363e678931ccc1b1ebed1f70c0c0c4c2ca64c9ca6a6'
         ];
 
-        $resJson = $this->client->request(
-            'GET',
-            config('douyin_api.app_api.douplus_list'),
-            [
-                'query' => $query,
-                'headers' => [
-                    'User-Agent' => 'com.ss.android.ugc.aweme/570 (Linux; U; Android 7.1.1; zh_CN; MX6; Build/NMF26O; Cronet/58.0.2991.0)',
-                    'Cookie' => $cookie
-                ]
-            ]
-        )->getBody()->getContents();
+        $xg = $this->getXg($this->getUrl(config('douyin_api.app_api.douplus_list'), $query));
+
+        $resJson = $resJson = $this->xgRequest($xg, $cookie);
 
         $resArr = json_decode($resJson, 1);
 
@@ -203,18 +195,7 @@ class DouyinApp570Api
 
         $xg = $this->getXg($this->getUrl(config('douyin_api.app_api.douplus_info'), $query));
 
-        $resJson = $this->client->request(
-            'GET',
-            $xg['url'],
-            [
-                'headers' => [
-                    'User-Agent' => 'com.ss.android.ugc.aweme/570 (Linux; U; Android 7.1.1; zh_CN; MX6; Build/NMF26O; Cronet/58.0.2991.0)',
-                    'Cookie' => $cookie,
-                    'X-Gorgon' => $xg['gorgon'],
-                    'X-Khronos' => $xg['khronos'],
-                ]
-            ]
-        )->getBody()->getContents();
+        $resJson = $this->xgRequest($xg, $cookie);
 
         $resArr = json_decode($resJson, 1);
 
@@ -228,6 +209,22 @@ class DouyinApp570Api
     protected function getUrl($url, array $query)
     {
         return $url . '?' . http_build_query($query);
+    }
+
+    protected function xgRequest($xg, $cookie, $method = 'get')
+    {
+        return $this->client->request(
+            'GET',
+            $xg['url'],
+            [
+                'headers' => [
+                    'User-Agent' => 'com.ss.android.ugc.aweme/570 (Linux; U; Android 7.1.1; zh_CN; MX6; Build/NMF26O; Cronet/58.0.2991.0)',
+                    'Cookie' => $cookie,
+                    'X-Gorgon' => $xg['gorgon'],
+                    'X-Khronos' => $xg['khronos'],
+                ]
+            ]
+        )->getBody()->getContents();
     }
 
     protected function getXg($url)
