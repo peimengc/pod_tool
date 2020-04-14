@@ -214,7 +214,7 @@ class DouyinApp570Api
     protected function xgRequest($xg, $cookie, $method = 'get')
     {
         return $this->client->request(
-            'GET',
+            $method,
             $xg['url'],
             [
                 'headers' => [
