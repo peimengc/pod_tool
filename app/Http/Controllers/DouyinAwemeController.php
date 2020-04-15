@@ -22,7 +22,8 @@ class DouyinAwemeController extends Controller
                 }
             })
             ->orderByDesc('create_time')
-            ->paginate();
+            ->paginate()
+            ->appends($request->all());
 
         $douyinUsers = $douyinUserService->all(['dy_nickname', 'dy_uid', 'dy_short_id', 'dy_unique_id']);
 
