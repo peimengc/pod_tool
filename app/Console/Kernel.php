@@ -34,9 +34,9 @@ class Kernel extends ConsoleKernel
         //获取淘宝订单
         $schedule->command('dingdanxia:get-order-details')->everyFiveMinutes();
         //定时获取账号视频
-        $schedule->command('douyin:get-aweme-post')->everyFiveMinutes();
+        $schedule->command('douyin:get-aweme-post')->everyTenMinutes();
         //定时更新抖音账号信息
-        $schedule->job(new UpdateDouyinUserPodcast())->everyThirtyMinutes();
+        $schedule->job(new UpdateDouyinUserPodcast())->hourly();
     }
 
     /**
