@@ -21,7 +21,9 @@ class DouyinAwemeController extends Controller
                     $builder->where('desc', 'like', "%{$aweme}%");
                 }
             })
-            ->orderByDesc('create_time')->paginate();
+            ->orderByDesc('create_time')
+            ->paginate();
+
         $douyinUsers = app(DouyinUserService::class)->pluck('dy_nickname', 'dy_uid');
 
         return view('douyin_aweme.index', compact('awemes', 'douyinUsers'));
