@@ -49,11 +49,13 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">抖音账号</span>
                             </div>
-                            <select name="douyin_user_id" id="douyin_user_id" class="form-control">
-                                <option value="">全部抖音号</option>
-                                @foreach($douyinUsers as $k=>$v)
-                                    <option @if(request('douyin_user_id')==$k) selected
-                                            @endif value="{{$k}}">{{$v}}</option>
+                            <select name="douyin_user_id[]" multiple id="douyin_user_id" data-live-search="true" data-title="全部抖音号"
+                                    class="form-control">
+                                @foreach($douyinUsers as $user)
+                                    <option @if(in_array($user->id,request('douyin_user_id',[]))) selected
+                                            @endif value="{{$user->id}}"
+                                            data-tokens="{{ $user->unique_short_id }} {{ $user->dy_nickname }}"
+                                            data-subtext="{{ $user->unique_short_id }}">{{$user->dy_nickname}}</option>
                                 @endforeach
                             </select>
                         </div>

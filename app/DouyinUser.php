@@ -45,4 +45,9 @@ class DouyinUser extends Model
         });
     }
 
+    public function getUniqueShortIdAttribute()
+    {
+        return $this->dy_unique_id ?: $this->dy_short_id;
+    }
+
 }

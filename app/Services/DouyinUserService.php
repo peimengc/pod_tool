@@ -93,11 +93,12 @@ class DouyinUserService
 
     /**
      * @param array $where
+     * @param array $columns
      * @return Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getByWhere(array $where)
+    public function getByWhere(array $where, $columns = ['*'])
     {
-        return $this->douyinUser->where($where)->get();
+        return $this->douyinUser->where($where)->get($columns);
     }
 
     /**
@@ -126,5 +127,10 @@ class DouyinUserService
     {
         return $this->douyinUser
             ->pluck($column, $key);
+    }
+
+    public function all($columns = ['*'])
+    {
+        return $this->douyinUser->get($columns);
     }
 }

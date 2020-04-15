@@ -16,10 +16,11 @@ class AlimamaOrderController extends Controller
         $this->service = $service;
     }
 
-    public function index()
+    public function index(DouyinUserService $douyinUserService)
     {
         $orders = $this->service->paginate();
-        $douyinUsers = app(DouyinUserService::class)->pluck('dy_nickname','id');
+
+        $douyinUsers = $douyinUserService->all(['dy_nickname', 'id', 'dy_short_id', 'dy_unique_id']);
 
         return view('alimama_order.index',compact('orders','douyinUsers'));
     }

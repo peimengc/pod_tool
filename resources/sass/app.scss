@@ -6,3 +6,12 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+@import "~bootstrap-select/sass/bootstrap-select";
+
+.btn-default {
+    color: #717171;
+    background-color: #fafafa;
+    border-color: #dadada;
+    border-bottom-color: #ccc
+}

@@ -11,7 +11,18 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
-} catch (e) {}
+    require('bootstrap-select')
+    require('bootstrap-select/js/i18n/defaults-zh_CN')
+    $(function () {
+        $('select').selectpicker({
+            container: 'body',
+            style: 'btn-default shadow-none',
+            size: 10,
+            selectedTextFormat:'count > 3'
+        });
+    })
+} catch (e) {
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

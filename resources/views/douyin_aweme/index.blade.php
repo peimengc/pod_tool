@@ -14,11 +14,13 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">抖音账号</span>
                             </div>
-                            <select name="author_user_id" id="author_user_id" class="form-control">
-                                <option value="">全部抖音号</option>
-                                @foreach($douyinUsers as $k=>$v)
-                                    <option @if(request('author_user_id')==$k) selected
-                                            @endif value="{{$k}}">{{$v}}</option>
+                            <select name="author_user_id[]" multiple id="author_user_id" data-live-search="true" data-title="全部抖音号"
+                                    class="form-control">
+                                @foreach($douyinUsers as $user)
+                                    <option @if(in_array($user->dy_uid,request('author_user_id',[]))) selected
+                                            @endif value="{{$user->dy_uid}}"
+                                            data-tokens="{{ $user->unique_short_id }} {{ $user->dy_nickname }}"
+                                            data-subtext="{{ $user->unique_short_id }}">{{$user->dy_nickname}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -28,7 +30,8 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">视频搜索</span>
                             </div>
-                            <input type="text" name="aweme" class="form-control" value="{{ request('aweme') }}" placeholder="视频链接/ID/标题">
+                            <input type="text" name="aweme" class="form-control" value="{{ request('aweme') }}"
+                                   placeholder="视频链接/ID/标题">
                         </div>
                     </div>
                     <div class="col-md-3">

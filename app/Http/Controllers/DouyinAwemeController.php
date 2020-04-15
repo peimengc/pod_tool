@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 
 class DouyinAwemeController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, DouyinUserService $douyinUserService)
     {
         $awemes = DouyinAweme::query()
             ->when($request->query('author_user_id'), function ($builder, $author_user_id) {
-                $builder->where('author_user_id', $author_user_id);
+                $builder->whereIn('author_user_id', $author_user_id);
             })
             ->when($request->query('aweme'), function ($builder, $aweme) {
                 if ($aweme_id = getAwemeIdByUrl($aweme)) {
@@ -24,7 +24,7 @@ class DouyinAwemeController extends Controller
             ->orderByDesc('create_time')
             ->paginate();
 
-        $douyinUsers = app(DouyinUserService::class)->pluck('dy_nickname', 'dy_uid');
+        $douyinUsers = $douyinUserService->all(['dy_nickname', 'dy_uid', 'dy_short_id', 'dy_unique_id']);
 
         return view('douyin_aweme.index', compact('awemes', 'douyinUsers'));
     }
