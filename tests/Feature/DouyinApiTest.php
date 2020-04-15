@@ -9,6 +9,16 @@ use Tests\TestCase;
 
 class DouyinApiTest extends TestCase
 {
+    public function testGetSubPid()
+    {
+        $cookie = 'sessionid=e8385bab1eb25b504855f3b7980945ce';
+        $api = new DouyinApp570Api();
+
+        $res = $api->getSubPid($cookie);
+
+        $this->assertTrue($res['status_code'] === 0);
+    }
+
     public function testGetTaskList()
     {
         $cookie = 'sessionid=1f1e33a469390c49a75f705d16f7fb85';
