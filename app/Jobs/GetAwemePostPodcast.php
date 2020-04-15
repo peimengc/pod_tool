@@ -7,29 +7,24 @@ use App\DouyinUser;
 use App\Events\DouyinCookieInvalid;
 use App\Helpers\Douyin\DouyinWebApi;
 use App\Services\DouyinAwemeService;
+use App\Services\DouyinUserService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 class GetAwemePostPodcast implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * @var DouyinUser
-     */
-    protected $douyinUser;
+    protected $douyinUsers;
 
-    /**
-     * GetAwemePostPodcast constructor.
-     * @param DouyinUser $douyinUser
-     */
-    public function __construct(DouyinUser $douyinUser)
+    public function __construct(Collection $douyinUsers)
     {
-        $this->douyinUser = $douyinUser;
+        $this->douyinUsers = $douyinUsers;
     }
 
     /**
@@ -42,14 +37,18 @@ class GetAwemePostPodcast implements ShouldQueue
         $api = new DouyinWebApi();
         $service = new DouyinAwemeService();
 
-        $data = $api->getAwemePost($this->douyinUser->sessionid);
+        $this->douyinUsers->each(function (DouyinUser $douyinUser) use ($api, $service) {
 
-        if (Arr::get($data, 'status_code') === 8) {
-            event(new DouyinCookieInvalid($this->douyinUser));
-            return;
-        }
+                $data = $api->getAwemePost($douyinUser->sessionid);
 
-        $service->save($data['aweme_list']);
+                if (Arr::get($data, 'status_code') === 8) {
+                    event(new DouyinCookieInvalid($douyinUser));
+                    return;
+                }
+
+                $service->save($data['aweme_list']);
+            });
+
 
     }
 }

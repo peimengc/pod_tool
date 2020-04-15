@@ -47,8 +47,9 @@ class GetAwemePost extends Command
     public function handle()
     {
         $this->service->getShopAccount()
-            ->each(function (DouyinUser $douyinUser) {
-                GetAwemePostPodcast::dispatch($douyinUser);
+            ->chunk(20)
+            ->each(function ($douyinUsers) {
+                GetAwemePostPodcast::dispatch($douyinUsers);
             });
     }
 }
