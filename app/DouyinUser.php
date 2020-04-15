@@ -25,7 +25,7 @@ class DouyinUser extends Model
     public function setTbSubPidAttribute($value)
     {
         $this->attributes['tb_sub_pid'] = $value;
-        $this->attributes['tb_adzone_id'] = explode('_', $value)[3];
+        $this->attributes['tb_adzone_id'] = $value ? explode('_', $value)[3] : null;
     }
 
     public function getSessionidAttribute()
