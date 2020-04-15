@@ -20,6 +20,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/douyin_users/{token}/check_qrconnect','DouyinUserController@checkQrconnect')->name('douyin_users.check_qrconnect');
 
     Route::get('/douyin_awemes','DouyinAwemeController@index')->name('douyin_awemes.index');
+    Route::get('/douyin_awemes/{aweme}/tasks','DouyinAwemeController@tasks')->name('douyin_awemes.tasks');
 
     Route::get('/alimama_orders','AlimamaOrderController@index')->name('alimama_orders.index');
 

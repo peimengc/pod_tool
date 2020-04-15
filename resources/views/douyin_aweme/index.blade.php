@@ -36,6 +36,7 @@
                     <thead>
                     <tr>
                         <th scope="col">视频</th>
+                        <th scope="col">操作</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -54,6 +55,11 @@
                                             评论:{{$aweme->comment_count}}
                                         </div>
                                     </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="btn-group-sm">
+                                    <a href="{{ route('douyin_awemes.tasks',$aweme) }}" class="btn btn-primary">投放列表</a>
                                 </div>
                             </td>
                         </tr>

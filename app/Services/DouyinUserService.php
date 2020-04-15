@@ -105,8 +105,9 @@ class DouyinUserService
      */
     public function getWorkAccount()
     {
-        return $this->douyinUser/*->where('type', DouyinUser::TYPE_WORK)*/
-        ->whereNotNull('dy_cookie')
+        return $this->douyinUser
+            ->where('type', DouyinUser::TYPE_WORK)
+            ->whereNotNull('dy_cookie')
             ->get();
     }
 

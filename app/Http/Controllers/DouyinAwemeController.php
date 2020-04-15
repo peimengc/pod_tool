@@ -19,4 +19,11 @@ class DouyinAwemeController extends Controller
 
         return view('douyin_aweme.index', compact('awemes', 'douyinUsers'));
     }
+
+    public function tasks(DouyinAweme $aweme)
+    {
+        $tasks = $aweme->tasks()->date()->orderByDesc('create_time')->paginate();
+
+        return view('douyin_aweme.tasks', compact('tasks','aweme'));
+    }
 }

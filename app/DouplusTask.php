@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Scopes\DateScopeTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class DouplusTask extends Model
 {
+    use DateScopeTrait;
+
     protected $fillable = [
         'douyin_auth_id',
         'aweme_id',
@@ -39,5 +42,10 @@ class DouplusTask extends Model
         self::STATE_REJECT => '被拒绝',
         self::STATE_REVIEW => '审核中',
     ];
+
+    protected function getDateField()
+    {
+        return 'create_time';
+    }
 
 }

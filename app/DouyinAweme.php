@@ -7,20 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class DouyinAweme extends Model
 {
-    use DateScopeTrait;
 
     protected $casts = [
         'create_time' => 'datetime'
     ];
 
-
-    public function defaultStartDate()
+    public function tasks()
     {
-        return now()->toDateString();
-    }
-
-    protected function getDateField()
-    {
-        return 'create_time';
+        return $this->hasMany(DouplusTask::class,'aweme_id','aweme_id');
     }
 }
