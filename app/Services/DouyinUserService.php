@@ -111,6 +111,17 @@ class DouyinUserService
             ->get();
     }
 
+    /**
+     * 获取橱窗账号
+     */
+    public function getShopAccount()
+    {
+        return $this->douyinUser
+            ->where('type', DouyinUser::TYPE_PROFIT)
+            ->whereNotNull('dy_cookie')
+            ->get();
+    }
+
     public function pluck($column, $key = null)
     {
         return $this->douyinUser

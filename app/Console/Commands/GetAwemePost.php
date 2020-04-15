@@ -46,7 +46,7 @@ class GetAwemePost extends Command
      */
     public function handle()
     {
-        $this->service->getWorkAccount()
+        $this->service->getShopAccount()
             ->each(function (DouyinUser $douyinUser) {
                 GetAwemePostPodcast::dispatch($douyinUser);
             });
