@@ -24,6 +24,14 @@
                         </div>
                     </div>
                     <div class="col-md-3">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">视频搜索</span>
+                            </div>
+                            <input type="text" name="aweme" class="form-control" value="{{ request('aweme') }}" placeholder="视频链接/ID/标题">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <button type="submit" class="btn btn-primary mb-2">提交</button>
                         <a href="{{route('douyin_awemes.index')}}" class="btn btn-secondary mb-2">清空</a>
                     </div>
@@ -47,7 +55,8 @@
                                     <div class="col-xs img"
                                          style="background-image: url('{{ $aweme->cover }}');height: 100px;max-width: 75px"></div>
                                     <div class="col-xs content">
-                                        <b><a target="_blank" href="{{ $aweme->share_url }}">{{ $aweme->desc ?: '暂无标题' }}</a></b>
+                                        <b><a target="_blank"
+                                              href="{{ $aweme->share_url }}">{{ $aweme->desc ?: '暂无标题' }}</a></b>
                                         <div>发布时间:{{ $aweme->create_time }}</div>
                                         <div>
                                             播放:{{$aweme->play_count}}
