@@ -42,17 +42,14 @@ class GetAwemePostPodcast implements ShouldQueue
         $api = new DouyinWebApi();
         $service = new DouyinAwemeService();
 
-        $max_cursor = 0;
+        $data = $api->getAwemePost($this->douyinUser->sessionid);
 
-        do {
-            $data = $api->getAwemePost($this->douyinUser->sessionid, $max_cursor);
+        if (Arr::get($data, 'status_code') === 8) {
+            event(new DouyinCookieInvalid($this->douyinUser));
+            return;
+        }
 
-            if (Arr::get($data, 'status_code') === 8) {
-                event(new DouyinCookieInvalid($this->douyinUser));
-                return;
-            }
+        $service->save($data['aweme_list']);
 
-            $max_cursor = $data['max_cursor'];
-        } while ($service->save($data['aweme_list']));
     }
 }
