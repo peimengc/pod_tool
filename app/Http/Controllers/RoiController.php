@@ -20,6 +20,7 @@ class RoiController extends Controller
                 $builder->whereDate('douplus_task_books.created_at', $date)
                     ->where('douplus_task_books.aweme_author_id', $douyinUser->dy_uid);
             })
+            ->orderBy('create_time', 'desc')
             ->limit(3)
             ->get();
 
@@ -72,6 +73,6 @@ class RoiController extends Controller
             'invalid_num' => $roi->sum('invalid_num'),
         ];
 
-        return view('roi.hour', compact('roi', 'douyinUser', 'roiSum','awemes'));
+        return view('roi.hour', compact('roi', 'douyinUser', 'roiSum', 'awemes'));
     }
 }
