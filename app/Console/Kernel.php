@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel
         //定时获取抖音消耗详情
         $schedule->command('douyin:get-task-info')->everyFifteenMinutes();
         //获取淘宝订单
-        $schedule->command('dingdanxia:get-order-details')->everyFiveMinutes();
+        $schedule->command('dingdanxia:get-order-details')->everyMinute();
         //定时获取账号视频
         $schedule->command('douyin:get-aweme-post')->everyTenMinutes();
         //定时更新抖音账号信息

@@ -49,7 +49,7 @@ class DingdanxiaGetOrderDetails extends Command
             $end = strtotime($end);
         } else {
             $end = time();
-            $start = $end - (60 * 10);
+            $start = $end - (60 * 5);
         }
         foreach (config('dingdanxia.auth_id') as $auth_id) {
 
