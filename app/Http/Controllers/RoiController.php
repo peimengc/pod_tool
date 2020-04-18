@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\AlimamaOrder;
 use App\DouplusTaskBook;
+use App\DouyinAweme;
 use App\DouyinUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,14 @@ class RoiController extends Controller
     {
         $date = $request->query('date', now()->toDateString());
 
+        $awemes = DouyinAweme::query()
+            ->whereHas('taskBooks', function ($builder) use ($date, $douyinUser) {
+                $builder->whereDate('douplus_task_books.created_at', $date)
+                    ->where('douplus_task_books.aweme_author_id', $douyinUser->dy_uid);
+            })
+            ->limit(3)
+            ->get();
+
         $taskBook = DouplusTaskBook::query()
             ->selectRaw('
                 date_format(created_at,\'%H:00\') as hour,
@@ -23,7 +32,7 @@ class RoiController extends Controller
                 0 as num
             ')
             ->whereDate('douplus_task_books.created_at', $date)
-            ->where('douplus_task_books.aweme_author_id',  $douyinUser->dy_uid);
+            ->where('douplus_task_books.aweme_author_id', $douyinUser->dy_uid);
 
         $order = AlimamaOrder::query()
             ->selectRaw('
@@ -43,10 +52,10 @@ class RoiController extends Controller
                 sum(cost) as cost,
                 sum(pub_share_pre_fee) as total_amount,
                 sum(num) as total_num,
-                sum(case when tk_status = 0 || tk_status = '.AlimamaOrder::TK_STATUS_CLOSED.' then 0 else pub_share_pre_fee end) as valid_amount,
-                sum(case when tk_status = 0 || tk_status = '.AlimamaOrder::TK_STATUS_CLOSED.' then 0 else 1 end) as valid_num,
-                sum(case when tk_status = '.AlimamaOrder::TK_STATUS_CLOSED.' then pub_share_pre_fee else 0 end) as invalid_amount,
-                sum(case when tk_status = '.AlimamaOrder::TK_STATUS_CLOSED.' then 1 else 0 end) as invalid_num
+                sum(case when tk_status = 0 || tk_status = ' . AlimamaOrder::TK_STATUS_CLOSED . ' then 0 else pub_share_pre_fee end) as valid_amount,
+                sum(case when tk_status = 0 || tk_status = ' . AlimamaOrder::TK_STATUS_CLOSED . ' then 0 else 1 end) as valid_num,
+                sum(case when tk_status = ' . AlimamaOrder::TK_STATUS_CLOSED . ' then pub_share_pre_fee else 0 end) as invalid_amount,
+                sum(case when tk_status = ' . AlimamaOrder::TK_STATUS_CLOSED . ' then 1 else 0 end) as invalid_num
             ')
             ->fromSub($order, 'order')
             ->groupBy('hour')
@@ -63,6 +72,6 @@ class RoiController extends Controller
             'invalid_num' => $roi->sum('invalid_num'),
         ];
 
-        return view('roi.hour',compact('roi','douyinUser','roiSum'));
+        return view('roi.hour', compact('roi', 'douyinUser', 'roiSum','awemes'));
     }
 }

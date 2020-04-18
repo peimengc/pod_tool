@@ -6,6 +6,27 @@
             <h4>ROI统计</h4>
             <p>当前账号: "{{ $douyinUser->dy_nickname }}" </p>
         </div>
+        <div class="col-md-12 pb-2">
+            <div class="row">
+                @foreach($awemes as $aweme)
+                    <div class="col-md-4">
+                        <div class="aweme-box">
+                            <div class="img"
+                                 style="background-image: url('{{ $aweme->cover }}');"></div>
+                            <div class="content">
+                                <b><a target="_blank"
+                                      href="{{ $aweme->share_url }}">{{ $aweme->desc ?: '暂无标题' }}</a></b>
+                                <div>
+                                    播放:{{$aweme->play_count}}
+                                    点赞:{{$aweme->digg_count}}
+                                    评论:{{$aweme->comment_count}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
         <div class="col-md-12">
             <form>
                 <div class="form-row align-items-center">
@@ -79,4 +100,26 @@
 
         </div>
     </div>
+@endsection
+
+@section('css')
+    <style>
+        .aweme-box {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .aweme-box .img{
+            border-radius: 5px;
+            background: no-repeat;
+            background-size: cover;
+            height: 80px;
+            width: 60px
+        }
+        .aweme-box .content{
+            padding-left: 10px;
+        }
+    </style>
 @endsection

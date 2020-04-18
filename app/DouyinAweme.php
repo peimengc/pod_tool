@@ -16,4 +16,9 @@ class DouyinAweme extends Model
     {
         return $this->hasMany(DouplusTask::class,'aweme_id','aweme_id');
     }
+
+    public function taskBooks()
+    {
+        return $this->hasMany(DouplusTaskBook::class,'aweme_id','aweme_id');
+    }
 }
