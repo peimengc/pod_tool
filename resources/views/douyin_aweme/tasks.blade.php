@@ -6,7 +6,7 @@
     <div class="row bg-white py-4 px-2">
         <div class="col-md-12">
             <h4>订单列表</h4>
-            <p>抖+订单列表，默认展示最近七天内的订单;当前视频: <u>{{ $aweme->desc }}</u></p>
+            <p>抖+订单列表，默认展示最近今天内的订单;当前视频: <u>{{ $aweme->desc }}</u></p>
         </div>
         <div class="col-md-12">
             <form>

@@ -22,7 +22,7 @@ trait DateScopeTrait
 
     public function defaultStartDate()
     {
-        return now()->addDays(-6)->toDateString();
+        return now()->toDateString();
     }
 
     public function defaultEndDate()

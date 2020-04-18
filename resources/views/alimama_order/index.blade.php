@@ -6,7 +6,7 @@
     <div class="row bg-white py-4 px-2">
         <div class="col-md-12">
             <h4>订单列表</h4>
-            <p>淘宝订单列表，默认展示最近七天内的订单</p>
+            <p>淘宝订单列表，默认展示最近今天内的订单</p>
         </div>
         <div class="col-md-12">
             <form>
