@@ -26,6 +26,8 @@ class GetTaskInfoPodcast implements ShouldQueue
      */
     protected $douyinUser;
 
+    public $timeout = '890';
+
     /**
      * Create a new job instance.
      *
@@ -64,7 +66,7 @@ class GetTaskInfoPodcast implements ShouldQueue
 
                     $taskService->updateByTaskInfo($douplusTask, $resArr);
 
-                    sleep(1.5);
+                    sleep(random_int(1, 2));
 
                 });
 
