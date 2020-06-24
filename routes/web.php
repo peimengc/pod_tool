@@ -7,7 +7,32 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::any('/auth', function (\Illuminate\Http\Request $request) {
+Route::get('/auth', function (\Illuminate\Http\Request $request) {
+
+    $url = 'https://oauth.taobao.com/token';
+    $postfields = array('grant_type' => 'authorization_code',
+        'client_id' => '30351084',
+        'client_secret' => '226a8cbe7d04c8066bbe6884537aabe9',
+        'code' => $request->code,
+        'redirect_uri' => 'http://taodoujia.cn/auth');
+    $post_data = '';
+    foreach ($postfields as $key => $value) {
+        $post_data .= "$key=" . urlencode($value) . "&";
+    }
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    //指定post数据
+    curl_setopt($ch, CURLOPT_POST, true);
+    //添加变量
+    curl_setopt($ch, CURLOPT_POSTFIELDS, substr($post_data, 0, -1));
+    $output = curl_exec($ch);
+    $httpStatusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    echo $httpStatusCode;
+    curl_close($ch);
+    var_dump($output);
     echo $request->getMethod();
     return $request->all();
 });
